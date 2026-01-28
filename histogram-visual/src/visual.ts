@@ -1524,8 +1524,12 @@ export class Visual implements IVisual {
             }
         }
 
+        // Get bin boundaries from range array
+        const binStart = (maxBin.range && maxBin.range[0] !== undefined) ? maxBin.range[0] : 0;
+        const binEnd = (maxBin.range && maxBin.range[1] !== undefined) ? maxBin.range[1] : binStart;
+
         // Return center of the bin with max frequency
-        return (maxBin.x0 + maxBin.x1) / 2;
+        return (binStart + binEnd) / 2;
     }
 
     // Extract raw values from data points for statistical calculations
