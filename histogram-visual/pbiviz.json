@@ -1,0 +1,22 @@
+{
+  "visual": {
+    "name": "HistogramWithStats",
+    "displayName": "Histogram with Mean/Median/Mode",
+    "guid": "HistogramWithStats1445664487616",
+    "visualClassName": "Visual",
+    "version": "3.0.0.0",
+    "description": "A histogram chart with reference lines for mean, median, and mode. Useful for statistical analysis and distribution visualization.",
+    "supportUrl": "https://community.powerbi.com",
+    "gitHubUrl": "https://github.com/Microsoft/PowerBI-visuals-histogram"
+  },
+  "author": {
+    "name": "Microsoft",
+    "email": "pbicvsupport@microsoft.com"
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json"
+}
