@@ -1512,23 +1512,20 @@ export class Visual implements IVisual {
             : (sorted[mid - 1] + sorted[mid]) / 2;
     }
 
-    private calculateMode(values: number[]): number {
-        if (values.length === 0) return 0;
-        const frequency: Map<number, number> = new Map();
-        let maxFreq = 0;
-        let mode = values[0];
+    // Mode = center of histogram bin with highest frequency
+    // This is the correct approach for continuous data
+    private calculateModeFromBins(dataPoints: HistogramDataPoint[]): number {
+        if (dataPoints.length === 0) return 0;
 
-        for (const val of values) {
-            // Round to 2 decimal places to group similar values
-            const rounded = Math.round(val * 100) / 100;
-            const freq = (frequency.get(rounded) || 0) + 1;
-            frequency.set(rounded, freq);
-            if (freq > maxFreq) {
-                maxFreq = freq;
-                mode = rounded;
+        let maxBin = dataPoints[0];
+        for (const bin of dataPoints) {
+            if (bin.y > maxBin.y) {
+                maxBin = bin;
             }
         }
-        return mode;
+
+        // Return center of the bin with max frequency
+        return (maxBin.x0 + maxBin.x1) / 2;
     }
 
     // Extract raw values from data points for statistical calculations
@@ -1572,7 +1569,8 @@ export class Visual implements IVisual {
         // Calculate all statistics
         const meanValue = this.calculateMean(values);
         const medianValue = this.calculateMedian(values);
-        const modeValue = this.calculateMode(values);
+        // Mode from histogram bins (center of bin with highest frequency)
+        const modeValue = this.calculateModeFromBins(this.data.dataPoints);
 
         // Define reference line configurations - order: mode, median, mean (left to right for skewed data)
         const lines: Array<{value: number, color: string, label: string, show: boolean, order: number}> = [
